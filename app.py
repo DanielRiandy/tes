@@ -80,7 +80,7 @@ tenor_in_days = col2.number_input(
     "tenor (in Days)", min_value = 0, step= 1
 )
 
-COL_USED = [enc_.transform(payor_entity_scale)[0], tenor_in_days]
+COL_USED = [enc_.transform([payor_entity_scale])[0], tenor_in_days]
 unseen_ = np.array([COL_USED]).reshape(1,-1)
 
 result = "None"
