@@ -6,7 +6,7 @@ from datetime import datetime
 
 st.title("Customer Classifier 🔬")
 
-st.sidebar.write(f'Last edited on {datetime.now().strftime("%d/%m/%Y %H:%M:%S")}')
+st.sidebar.write(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}')
 add_selectbox = st.sidebar.selectbox(
     'What do you want to do?',
     ('Single Prediction', 'Multiple Prediction')
