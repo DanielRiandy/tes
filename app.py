@@ -87,7 +87,7 @@ result = "None"
 if st.button(
     "Get Result"
 ):
-    result = model_.predict__proba(unseen_)[0][0]
+    result = model_.predict_proba(unseen_)[0][0]
 
 if result != "None":
     if result > .5:
