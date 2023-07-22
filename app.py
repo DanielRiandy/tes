@@ -114,7 +114,7 @@ elif add_selectbox == 'Multiple Prediction':
     uploaded_file = st.file_uploader("Choose a file (.csv, .xlsx)")
     if uploaded_file is not None:
         try:
-            df = pd.read_csv(uploaded_file)
+            df = pd.read_csv(uploaded_file, sep=';')
         except:
             df = pd.read_excel(uploaded_file)
             
