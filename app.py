@@ -128,10 +128,9 @@ elif add_selectbox == 'Multiple Prediction':
         st.write('Prediction Done ✅')
 
         st.download_button(
-           "Press to Download",
-           df,
-           "file.csv",
-           "text/csv",
-           key='download-csv'
+              label="Download data as CSV",
+              data=df,
+              file_name='data.csv',
+              mime='text/csv',
         )
         
