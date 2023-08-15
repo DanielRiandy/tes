@@ -87,6 +87,9 @@ if add_selectbox == 'Single Prediction':
     tenor_in_days = col2.number_input(
         "tenor (in Days)", min_value = 0, step= 1
     )
+
+    COL_USED_TEMP = [payor_entity_scale, tenor_in_days]
+    unseen_temp = np.array([COL_USED_TEMP]).reshape(1,-1)
     
     COL_USED = [enc_.transform([payor_entity_scale])[0], tenor_in_days]
     unseen_ = np.array([COL_USED]).reshape(1,-1)
@@ -105,7 +108,7 @@ if add_selectbox == 'Single Prediction':
             pred = 'Bad Customer'
             score = 1 - result
         
-        if 0.0 in unseen_:
+        if 0.0 in unseen_temp:
             st.warning('Features invalid! Please fill the features with non-zero values', icon="⚠️")
         else :
             st.success(f"{pred} | Confidence Level: {round((score*100),3)}%", icon="✅")
