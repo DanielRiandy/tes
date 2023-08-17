@@ -13,7 +13,10 @@ add_selectbox = st.sidebar.selectbox(
 )
 
 model_ = pickle.load(open(r'Artifacts/Model/model.bin', "rb"))
-enc_ = pickle.load(open(r'Artifacts/Features/payor_entity_scale.b', "rb"))
+enc_payor_entity_scale = pickle.load(open(r'Artifacts/Features/payor_entity_scale.b', "rb"))
+enc_benef_industry = pickle.load(open(r'Artifacts/Features/benef_industry.b', "rb"))
+enc_loan_status = pickle.load(open(r'Artifacts/Features/loan_status.b', "rb"))
+enc_province_name = pickle.load(open(r'Artifacts/Features/province_name.b', "rb"))
 
 
 if add_selectbox == 'Single Prediction':
@@ -88,10 +91,14 @@ if add_selectbox == 'Single Prediction':
         "tenor (in Days)", min_value = 0, step= 1
     )
 
-    COL_USED_TEMP = [payor_entity_scale, tenor_in_days]
+    COL_USED_TEMP = [benef_entity, loan_status, province_name, payor_entity_scale, tenor_in_days]
     unseen_temp = np.array([COL_USED_TEMP]).reshape(1,-1)
     
-    COL_USED = [enc_.transform([payor_entity_scale])[0], tenor_in_days]
+    COL_USED = [enc_payor_entity_scale.transform([payor_entity_scale])[0],
+                enc_benef_industry.transform([benef_entity])[0],
+                enc_loan_status.transform([loan_status])[0],
+                enc_province_name.transform([province_name])[0], 
+                tenor_in_days]
     unseen_ = np.array([COL_USED]).reshape(1,-1)
     
     result = "None"
@@ -123,9 +130,13 @@ elif add_selectbox == 'Multiple Prediction':
             
         st.write(df)
 
-        COL_USED = ['payor_entity_scale', 'tenor_in_days']
+        COL_USED = ['benef_industry', 'loan_status', 'payor_entity_scale', 'province_name', 'tenor_in_days']
         df_temp = df[COL_USED]
-        df_temp['payor_entity_scale'] = enc_.transform(df_temp['payor_entity_scale'])
+        
+        df_temp['payor_entity_scale'] = enc_payor_entity_scale.transform(df_temp['payor_entity_scale'])
+        df_temp['benef_industry'] = enc_benef_industry.transform(df_temp['benef_industry'])
+        df_temp['loan_status'] = enc_loan_status.transform(df_temp['loan_status'])
+        df_temp['province_name'] = enc_province_name.transform(df_temp['province_name'])
         
         df['Prediction'] = model_.predict(df_temp)
         st.write('Prediction Done ✅')
