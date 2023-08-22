@@ -93,7 +93,6 @@ if add_selectbox == 'Single Prediction':
     )
 
     COL_USED_TEMP = [benef_entity, loan_status, province_name, payor_entity_scale, tenor_in_days]
-    unseen_temp = np.array([COL_USED_TEMP]).reshape(1,-1)
     
     COL_USED = [enc_payor_entity_scale.transform([payor_entity_scale])[0],
                 enc_benef_industry.transform([benef_entity])[0],
@@ -116,7 +115,7 @@ if add_selectbox == 'Single Prediction':
             pred = 'Bad Customer'
             score = 1 - result
         
-        if 0.0 in unseen_temp:
+        if 0.0 in COL_USED_TEMP or 0 in COL_USED_TEMP:
             st.warning('Features invalid! Please fill the features with non-zero values', icon="⚠️")
         else :
             st.success(f"{pred} | Confidence Level: {round((score*100),3)}%", icon="✅")
